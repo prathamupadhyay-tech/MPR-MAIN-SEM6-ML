@@ -59,13 +59,15 @@ while True:
         y2 = int(max(y_) * H) - 10
 
         prediction = model.predict([np.asarray(data_aux)])
-
+        prediction_accuracy = model.predict_proba([np.asanyarray(data_aux)])
         predicted_character = labels_dict[int(prediction[0])]
-
+        predicted_accuracy = max(prediction_accuracy[0])
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
         cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
                     cv2.LINE_AA)
-
+        cv2.putText(frame,str(predicted_accuracy*100), (x1+20, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
+                    cv2.LINE_AA)
+        
     cv2.imshow('frame', frame)
     cv2.waitKey(1)
 
